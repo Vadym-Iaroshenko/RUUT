@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruut — Through a Marketer's Eyes</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2744;
+    --accent: #4a7cdc;
+    --soft: #f4f6fb;
+    --muted: #6b7a99;
+    --white: #ffffff;
+    --border: #e2e8f0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'DM Sans',sans-serif; background:var(--white); color:var(--navy); overflow-x:hidden; }
+
+  /* HERO */
+  .hero {
+    background:var(--navy); min-height:100vh;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:clamp(48px,8vw,100px) clamp(24px,6vw,80px);
+    position:relative; overflow:hidden;
+  }
+  .hero::after {
+    content:''; position:absolute; bottom:-160px; right:-160px;
+    width:500px; height:500px;
+    background:radial-gradient(circle,rgba(74,124,220,.12) 0%,transparent 70%);
+    border-radius:50%; pointer-events:none;
+  }
+  .hero-kicker {
+    font-size:11px; letter-spacing:3px; text-transform:uppercase;
+    color:var(--accent); margin-bottom:28px;
+    opacity:0; animation:fadeUp .7s .1s forwards;
+  }
+  .hero h1 {
+    font-family:'Playfair Display',serif;
+    font-size:clamp(30px,5vw,62px);
+    color:var(--white); line-height:1.1; max-width:720px;
+    opacity:0; animation:fadeUp .7s .3s forwards;
+  }
+  .hero h1 em { font-style:italic; color:var(--accent); }
+  .hero-body {
+    margin-top:24px; max-width:500px;
+    font-size:16px; line-height:1.78; color:rgba(255,255,255,.5);
+    opacity:0; animation:fadeUp .7s .5s forwards;
+  }
+  .hero-note {
+    margin-top:44px; font-size:12px;
+    color:rgba(255,255,255,.2); font-style:italic;
+    opacity:0; animation:fadeUp .7s .8s forwards;
+  }
+  .scroll-cue {
+    position:absolute; bottom:36px; left:clamp(24px,6vw,80px);
+    display:flex; align-items:center; gap:12px;
+    font-size:11px; letter-spacing:2px; text-transform:uppercase;
+    color:rgba(255,255,255,.22);
+    opacity:0; animation:fadeUp .7s 1s forwards;
+  }
+  .scroll-cue::before { content:''; display:block; width:36px; height:1px; background:rgba(255,255,255,.22); }
+
+  /* LAYOUT */
+  .wrap { max-width:760px; margin:0 auto; padding:clamp(56px,9vw,100px) clamp(24px,6vw,48px); }
+  .alt { background:var(--soft); }
+
+  .label { font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:16px; }
+  h2 { font-family:'Playfair Display',serif; font-size:clamp(22px,3vw,36px); line-height:1.2; margin-bottom:22px; }
+  .body { font-size:16px; line-height:1.82; color:#3d4f6e; margin-bottom:16px; }
+
+  /* FUNNEL STAGE HEADER */
+  .stage-header {
+    display:flex; align-items:center; gap:16px;
+    margin-bottom:24px; padding-bottom:18px;
+    border-bottom:1px solid var(--border);
+  }
+  .stage-badge {
+    background:var(--navy); color:var(--white);
+    font-size:10px; letter-spacing:2px; text-transform:uppercase;
+    padding:6px 14px; border-radius:20px; white-space:nowrap;
+  }
+  .stage-name {
+    font-family:'Playfair Display',serif;
+    font-size:clamp(18px,2.2vw,24px); color:var(--navy);
+  }
+
+  /* OBSERVATION BLOCK */
+  .obs {
+    background:var(--white); border:1px solid var(--border);
+    border-radius:16px; padding:28px 26px; margin-bottom:16px;
+  }
+  .obs-tag {
+    font-size:10px; letter-spacing:2px; text-transform:uppercase;
+    color:var(--accent); margin-bottom:10px;
+  }
+  .obs h3 { font-size:15px; font-weight:600; color:var(--navy); margin-bottom:8px; }
+  .obs p { font-size:14px; color:var(--muted); line-height:1.68; }
+
+  /* DARK INSIGHT */
+  .dark-box {
+    background:var(--navy); border-radius:20px;
+    padding:clamp(28px,4vw,44px); margin-top:8px;
+    position:relative; overflow:hidden;
+  }
+  .dark-box::before {
+    content:''; position:absolute; top:-80px; right:-80px;
+    width:260px; height:260px;
+    background:radial-gradient(circle,rgba(74,124,220,.18) 0%,transparent 65%);
+    border-radius:50%; pointer-events:none;
+  }
+  .dark-box h3 { font-family:'Playfair Display',serif; font-size:clamp(17px,2vw,22px); color:var(--white); margin-bottom:12px; }
+  .dark-box p { font-size:14px; color:rgba(255,255,255,.6); line-height:1.75; margin-bottom:10px; }
+  .dark-box p:last-child { margin-bottom:0; }
+
+  /* METRIC ROW */
+  .metric-row {
+    display:grid; grid-template-columns:1fr 1fr 1fr;
+    gap:14px; margin-top:24px;
+  }
+  @media(max-width:560px){ .metric-row{ grid-template-columns:1fr; } }
+  .metric {
+    background:var(--white); border:1px solid var(--border);
+    border-radius:14px; padding:20px 18px; text-align:center;
+  }
+  .metric-icon { font-size:22px; margin-bottom:8px; }
+  .metric-title { font-size:13px; font-weight:600; color:var(--navy); margin-bottom:4px; }
+  .metric-desc { font-size:12px; color:var(--muted); line-height:1.5; }
+
+  /* TRANSITION STRIP */
+  .strip {
+    background:var(--accent);
+    padding:32px clamp(24px,6vw,80px);
+    text-align:center;
+  }
+  .strip p {
+    font-family:'Playfair Display',serif;
+    font-size:clamp(17px,2.2vw,24px);
+    color:var(--white); line-height:1.45;
+    font-style:italic; max-width:620px; margin:0 auto;
+  }
+
+  /* QUESTION */
+  .q-box {
+    border:1.5px solid var(--accent); border-radius:18px;
+    padding:32px 28px; margin-top:28px; position:relative;
+  }
+  .q-label {
+    position:absolute; top:-11px; left:20px;
+    background:var(--white); padding:0 10px;
+    font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--accent);
+  }
+  .q-box p {
+    font-family:'Playfair Display',serif;
+    font-size:clamp(16px,1.9vw,21px); color:var(--navy);
+    line-height:1.5; font-style:italic;
+  }
+
+  /* SIGN */
+  .sign {
+    background:var(--navy);
+    padding:clamp(40px,7vw,72px) clamp(24px,6vw,80px);
+    display:flex; align-items:center; justify-content:space-between;
+    gap:28px; flex-wrap:wrap;
+  }
+  .sign-note { font-size:13px; color:rgba(255,255,255,.28); line-height:1.7; max-width:400px; font-style:italic; }
+  .sign-right { text-align:right; }
+  .sign-name { font-family:'Playfair Display',serif; font-size:26px; color:var(--white); }
+  .sign-role { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-top:4px; }
+
+  /* ANIM */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+  .r { opacity:0; transform:translateY(22px); transition:opacity .65s ease,transform .65s ease; }
+  .r.on { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-kicker">Ruut — Through a Marketer's Eyes</div>
+  <h1>I went through the quiz<br>as a user.<br>Then I looked again — <em>as a marketer.</em></h1>
+  <p class="hero-body">What follows is what I saw the second time: not just an onboarding flow, but a funnel with a clear logic at every step. This is that analysis.</p>
+  <p class="hero-note">Based on the onboarding experience at signup.ruutlabs.com and learn.ruutlabs.com</p>
+  <div class="scroll-cue">Read on</div>
+</section>
+
+<!-- AWARENESS -->
+<div class="wrap">
+  <div class="stage-header r">
+    <span class="stage-badge">Stage 1</span>
+    <span class="stage-name">Awareness — making the user feel found</span>
+  </div>
+
+  <p class="body r">The quiz opens before the user has made any commitment. No account, no payment, no promise. Just a question. And it's the right question — broad enough to include almost everyone, specific enough to feel personal.</p>
+
+  <div class="obs r">
+    <div class="obs-tag">What I noticed</div>
+    <h3>"Do you often feel tired and low on energy throughout the day?"</h3>
+    <p>I answered before I finished reading. There was no hesitation — just instant recognition. That's the awareness hook: not a feature, not a benefit, but a feeling the user already carries. The quiz doesn't introduce a problem. It names one that already exists.</p>
+  </div>
+
+  <div class="dark-box r">
+    <h3>The funnel logic at this stage</h3>
+    <p>At the Awareness stage, the goal is a single thing: make the right person feel seen. Ruut's opening questions are designed to achieve exactly that — fatigue, concentration, brain fog, decision-making. Each one is broad enough to resonate widely, and personal enough that the user thinks "this is about me." That's how you earn the next click.</p>
+  </div>
+</div>
+
+<!-- ACQUISITION -->
+<div class="alt">
+  <div class="wrap">
+    <div class="stage-header r">
+      <span class="stage-badge">Stage 2</span>
+      <span class="stage-name">Acquisition — deepening the investment</span>
+    </div>
+
+    <p class="body r">Once the user is in, the quiz shifts format. Questions become first-person statements. The user is no longer answering about themselves — they are agreeing with something already written about them. That's a different kind of engagement.</p>
+
+    <div class="obs r">
+      <div class="obs-tag">What I noticed</div>
+      <h3>"I often wake up feeling tired no matter how much sleep I got."</h3>
+      <p>When the format changed to first-person statements rated 1 to 5, I felt the shift. Before, I was describing myself. Now I was recognizing myself. The emotional weight increased. Each statement added to a growing sense that this product understands something real about my life — and that made me want to keep going.</p>
+    </div>
+
+    <div class="obs r">
+      <div class="obs-tag">Trust at the right moment</div>
+      <h3>Stanford, Cambridge, Harvard — placed mid-quiz, not at the start</h3>
+      <p>Scientific credibility appeared not as an opening sales argument, but at the precise moment when a first-time user might quietly wonder: is this real? The timing answers a question before it becomes doubt. That's a deliberate acquisition mechanic — keeping the user moving forward by removing friction exactly where it could appear.</p>
+    </div>
+
+    <div class="dark-box r">
+      <h3>The funnel logic at this stage</h3>
+      <p>Acquisition here isn't about getting an email or a payment — it's about getting time and attention. Every additional minute the user spends in the quiz is an investment. The format shift to first-person statements deepens that investment emotionally. By the time the quiz ends, the user has committed far more than a click. They've committed their story.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ACTIVATION -->
+<div class="wrap">
+  <div class="stage-header r">
+    <span class="stage-badge">Stage 3</span>
+    <span class="stage-name">Activation — the moment everything lands</span>
+  </div>
+
+  <p class="body r">The quiz ends with a screen that does something specific: it turns the user's answers into a visual identity. Not a report. Not a score on a spreadsheet. A figure. A battery. A number that means something.</p>
+
+  <div class="obs r">
+    <div class="obs-tag">What I noticed</div>
+    <h3>Body Battery LOW — a feeling given a shape</h3>
+    <p>The result screen showed a figure hunched forward with a near-empty battery above his head. Sleep Debt over 5 hours. Energy Level: Low. After answering every question honestly, seeing yourself reflected back as that figure is something else entirely. It's not abstract data — it's a feeling I already knew, now given a name and a visual form. That's the activation moment: the user doesn't just understand their problem, they feel it differently.</p>
+  </div>
+
+  <div class="dark-box r">
+    <h3>The funnel logic at this stage</h3>
+    <p>Activation is the "aha moment" — the point where a user understands the product's value clearly enough to act. Ruut's Body Battery screen creates that moment visually and emotionally, not just informationally. The email ask that follows doesn't feel like a gate. It feels like the natural next step in a journey the user already decided to take.</p>
+  </div>
+</div>
+
+<!-- TRANSITION STRIP -->
+<div class="strip r">
+  <p>"The quiz doesn't ask for the email. By the time it appears, the user is already looking for it."</p>
+</div>
+
+<!-- RETENTION -->
+<div class="alt">
+  <div class="wrap">
+    <div class="stage-header r">
+      <span class="stage-badge">Stage 4</span>
+      <span class="stage-name">Retention — what the product promises next</span>
+    </div>
+
+    <p class="body r">Beyond the quiz, the Ruut site outlines what the product looks like after signup. Three elements stand out from a retention perspective.</p>
+
+    <div class="metric-row">
+      <div class="metric r">
+        <div class="metric-icon">🎯</div>
+        <div class="metric-title">Custom Plans</div>
+        <div class="metric-desc">Quiz data — body battery, sleep debt, HRV — becomes a personalized daily program. The product continues what the quiz started.</div>
+      </div>
+      <div class="metric r">
+        <div class="metric-icon">⏱️</div>
+        <div class="metric-title">10 Minutes a Day</div>
+        <div class="metric-desc">A low enough commitment to start. Many users report changes within the first week — fast enough to keep the habit alive.</div>
+      </div>
+      <div class="metric r">
+        <div class="metric-icon">🔁</div>
+        <div class="metric-title">Daily Return</div>
+        <div class="metric-desc">"Log in daily and follow your plan." The retention mechanic is simple: make coming back feel like progress.</div>
+      </div>
+    </div>
+
+    <div class="dark-box r" style="margin-top:24px;">
+      <h3>The funnel logic at this stage</h3>
+      <p>Retention depends on one thing: does the product deliver the feeling the quiz created? The quiz built a specific expectation — that this program was made for this person, based on their answers. If that personalization continues to feel real in daily use, the user stays. The first week is likely where that question gets answered.</p>
+    </div>
+  </div>
+</div>
+
+<!-- QUESTION -->
+<div class="wrap">
+  <div class="label r">One Question</div>
+  <h2 class="r">What I'd genuinely like to understand</h2>
+  <p class="body r">This analysis is built on what's visible from the outside. One question follows naturally from the funnel logic above:</p>
+
+  <div class="q-box r">
+    <div class="q-label">Open question</div>
+    <p>How much of the personalization built during the quiz does the user actually feel in their daily experience — and how does Ruut measure that feeling in the first 30 days?</p>
+  </div>
+</div>
+
+<!-- SIGN -->
+<div class="sign">
+  <p class="sign-note">Prepared after going through the full Ruut onboarding as a first-time user. Created in collaboration with AI tools — which I consider a professional skill, not a shortcut.</p>
+  <div class="sign-right">
+    <div class="sign-name">Vadym Iaroshenko</div>
+    <div class="sign-role">Creative Marketing Candidate · Universe</div>
+  </div>
+</div>
+
+<script>
+  const els = document.querySelectorAll('.r');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
+  }, { threshold:0.08 });
+  els.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
